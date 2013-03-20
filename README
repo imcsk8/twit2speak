@@ -32,6 +32,8 @@ this is a quick hack so there's no server or anything.
 if you want to be bothered by your friends constantly
 you can put the program on your cron or use this little bash magic:
 
-while [ 1 ]; do ./twit2speak.pl; sleep 10 ; done
+while [ 1 ]; do ./twit2speak.pl; sleep 300 ; done
+
+The Twitter API allows you no more than 350 requests per hour, so a sleep time of 300 (5 minutes) is good if you're going to have it running constantly.
 
 have fun :)
