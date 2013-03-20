@@ -44,9 +44,11 @@ my $token = "";
 my $token_secret = "";
 
 my $SPOKEN_FILE = "spoken.log";
-
 my $ESPEAK_COMMAND = "espeak -a150 -p30 -s 140 -v es-mx -k20 --stdin";
+my $DEBUG = 0;
 
+my $HASHTAG = "#t2s";
+my $COUNT = 5;
 
 # When no authentication is required:
 my $nt = Net::Twitter->new(legacy => 0);
@@ -60,28 +62,22 @@ my $nt = Net::Twitter->new(
     access_token_secret => $token_secret,
 );
 
-#my $result = $nt->update('Hello, world!');
 
 eval {
-    #my $statuses = $nt->friends_timeline({ count => 5 });
-    my $statuses = $nt->mentions({ count => 5 });
+    my $statuses = $nt->mentions({ count => $COUNT });
     for my $status ( @$statuses ) {
         print "$status->{created_at} <$status->{user}{screen_name}> $status->{text}\n";
 
-		if ($status->{text} =~ /t2s/) {
+		if ($status->{text} =~ /$HASHTAG/) {
 			my $msg = $status->{text};
-			$msg =~ s/\#t2s|t2s//g;
+			$msg =~ s/$HASHTAG//g;
 			$msg = "$msg " . $status->{user}{screen_name};
 			if( check_spoken($msg) ){
 				next;
 			}
 			set_spoken($msg);
-			print $ESPEAK_COMMAND . " \'$status->{text}\'\n";
-			#system($ESPEAK_COMMAND . " \'$msg\'" );
-			open(COMMAND, "|$ESPEAK_COMMAND") || warn "Can't execute command";
-			print COMMAND $msg;
-			print COMMAND pack("c", "04"); 
-			close(COMMAND);
+			print $ESPEAK_COMMAND . " \'$status->{text}\'\n" if $DEBUG;
+			speak($msg);
 		}
     }
 	
@@ -94,6 +90,13 @@ if ( my $err = $@ ) {
          "Twitter error.....: ", $err->error, "\n";
 }
 
+sub speak {
+	my $msg = shift;
+	open(COMMAND, "|$ESPEAK_COMMAND") || warn "Can't execute command $!\n";
+	print COMMAND $msg;
+	print COMMAND pack("c", "04"); 
+	close(COMMAND);
+}
 
 sub set_spoken {
 	my $msg = shift;

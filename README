@@ -19,8 +19,11 @@ apt-get install libnet-twitter-perl
 Gentoo
 emerge dev-perl/Net-Twitter
 
-you also have to create a twitter app and add the consumer_key, consumer_secret, token and token_secret
+You also have to create a twitter app and add the consumer_key, consumer_secret, token and token_secret
 to the appropiate variables
+
+The script will get the last 5 mentions to your twitter name and will call espeak with the text of the tweet if it contains the #t2s hashtag. 
+You can change this by modifiying the value of the $COUNT and $HASTAG variables.
 
 If you have any problem, addition or bugfix contact me: @imcsk8 <ichavero at chavero.com.mx>
 The code is at https://github.com/imcsk8/twit2speak so fork it fix it and extend it  :)
