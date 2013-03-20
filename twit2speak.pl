@@ -38,10 +38,12 @@ use Net::Twitter;
 use Scalar::Util 'blessed';
 use Digest::MD5 qw(md5_base64);
 
-my $consumer_key = "";
-my $consumer_secret = "";
-my $token = "";
-my $token_secret = "";
+my $CONF = require "twit2speak.conf";
+
+my $consumer_key = $CONF->{consumer_key};
+my $consumer_secret = $CONF->{consumer_secret};
+my $token = $CONF->{token};
+my $token_secret = $CONF->{token_secret};
 
 my $SPOKEN_FILE = "spoken.log";
 my $ESPEAK_COMMAND = "espeak -a150 -p30 -s 140 -v es-mx -k20 --stdin";
