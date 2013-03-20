@@ -1,0 +1,34 @@
+Simple script that converts a tweet to speech :P
+
+(c) Ivan Chavero <ichavero at chavero.com.mx>
+this program is licensed by the GNU license so you know what to do ;) http://www.gnu.org/copyleft/gpl.html
+
+in order yo use it you need to:
+install the next programs and perl packages
+espeak
+debian(s)
+apt-get install espeak 
+
+Gentoo
+emerge app-accessibility/espeak
+
+Net::Twitter
+ubuntu(s)
+apt-get install libnet-twitter-perl
+
+Gentoo
+emerge dev-perl/Net-Twitter
+
+you also have to create a twitter app and add the consumer_key, consumer_secret, token and token_secret
+to the appropiate variables
+
+If you have any problem, addition or bugfix contact me: @imcsk8 <ichavero at chavero.com.mx>
+The code is at https://github.com/imcsk8/twit2speak so fork it fix it and extend it  :)
+
+this is a quick hack so there's no server or anything.
+if you want to be bothered by your friends constantly
+you can put the program on your cron or use this little bash magic:
+
+while [ 1 ]; do ./twit2speak.pl; sleep 10 ; done
+
+have fun :)
